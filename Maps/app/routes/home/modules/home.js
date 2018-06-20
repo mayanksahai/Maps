@@ -14,7 +14,7 @@ const LONGITUDE_DELTA = ASPECT_RATIO * LATITUDE_DELTA;
 // Constants
 //---------------------------
 const {GET_CURRENT_LOCATION,GET_INPUT,SELECTED_SEARCH_TAB,GET_ADDRESS_SUGGESTIONS,
-        GET_SELECTED_ADDRESS, GET_DISTANCE_MATRIX, GET_FARE, BOOK_CAR, GET_NEAR_BY_DRIVERS} = constants;
+        GET_SELECTED_ADDRESS, GET_DISTANCE_MATRIX, GET_FARE, BOOK_CAR, GET_NEAR_BY_DRIVERS, BOOKING_CONFIRMED} = constants;
 
 //---------------------------
 // Actions
@@ -121,7 +121,7 @@ export function getSelectedAddress(payload){
 export function bookCar(){
     return((dispatch,store) => {
         const nearByDrivers = store().home.nearByDrivers;
-        const nearByDriver = nearByDrivers[Math.floor(Math.random() * nearByDrivers.length)];
+        const nearByDriver = nearByDrivers[1];
         const payload = {
             data:{
                 username:"mayank",
@@ -308,6 +308,14 @@ function handleGetNearByDrivers(state,action){
     })
 }
 
+function handleBookingConfirmed(state, action){
+    return update(state, {
+        booking:{
+            $set: action.payload
+        }
+    });
+
+}
 
 const initialState = {
     region:{},
@@ -326,7 +334,8 @@ const ACTION_HANDLERS= {
     GET_DISTANCE_MATRIX:handleGetDistanceMatrix,
     GET_FARE:handleGetFare,
     BOOK_CAR:handleBookCar,
-    GET_NEAR_BY_DRIVERS:handleGetNearByDrivers
+    GET_NEAR_BY_DRIVERS:handleGetNearByDrivers,
+    BOOKING_CONFIRMED:handleBookingConfirmed
 };
 
 export function HomeReducer(state=initialState,action){

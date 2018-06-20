@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {View,Text} from "react-native";
+import {Actions} from "react-native-router-flux";
 
 import {Container} from "native-base";
 import MapContainer from "./mapContainer/index";
@@ -20,6 +21,12 @@ class Home extends Component{
         setTimeout(function(){
             rx.props.getNearByDrivers();
         },1000);
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        if(this.props.booking.status === "confirmed"){
+            Actions.trackDriver({type:"reset"});
+        }
     }
 
     render(){
