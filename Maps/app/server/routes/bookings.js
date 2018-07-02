@@ -13,6 +13,16 @@ router.get("/bookings",function(req,res,next){
     });
 });
 
+// get all pending bookings
+router.get("/pendingBookings",function(req,res,next){
+    db.bookings.find({'status':'pending'},function(err,bookings){
+        if(err){
+            res.send(err);
+        }
+        res.json(bookings);
+    });
+});
+
 router.post("/bookings",function(req,res,next){
     var booking = req.body.data;
     var nearByDriver = req.body.nearByDriver;

@@ -12,7 +12,7 @@ export const DriverFound = ({ driverInfo, getDriverLocation})=>{
         <View style={styles.findDriverContainer}>
             <View style={styles.content}>
                 <Text>YAY Driver Found!</Text>
-                <Image resizemode="contain" style={styles.driverPic} source={{isStatic:true,uri:"./../../../../assets/images/driver.jpg"}} />
+                <Image resizemode="contain" style={styles.driverPic} source={require('../../../../assets/images/driver.jpg')} />
                 <View style={styles.driverInfo}>
                     <Text style={styles.quotationMarkLeft}>""</Text>
                     <View style={styles.driverBio}>

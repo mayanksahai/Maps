@@ -1,5 +1,5 @@
 import React from "react";
-import {View,Text} from "native-base";
+import {View} from "native-base";
 import MapView from "react-native-maps";
 import styles from "./mapContainerStyles";
 import SearchBox from "../searchBox";

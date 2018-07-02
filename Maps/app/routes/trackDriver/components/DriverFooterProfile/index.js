@@ -11,7 +11,7 @@ export const DriverFooterProfile = ({ driverInfo, getDriverLocation})=>{
     return (
         <View style={styles.footerContainer}>
             <View style={styles.imageContainer}>
-                <Image resizemode="contain" style={styles.driverPic} source={{uri:profilePic}} />
+                <Image resizemode="contain" style={styles.driverPic} source={require('../../../../assets/images/driver.jpg')} />
             </View>
             <View style={styles.ratingContainer}>
                 <StarRating
