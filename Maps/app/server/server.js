@@ -6,6 +6,7 @@ var index = require("./routes/index");
 var bookings = require("./routes/bookings");
 var driverLocationSocket = require("./routes/driverLocations");
 var driverLocation = require("./routes/driverLocations");
+var driverLocationRegistration = require("./routes/driverLocations");
 var drivers = require("./routes/drivers");
 
 var app = express();
@@ -32,12 +33,24 @@ app.use("/",index);
 app.use("/api",bookings);
 app.use("/api",driverLocationSocket);
 app.use("/api",driverLocation);
-app.use("/api", drivers);
+app.use("/api",drivers);
+app.use("/api",driverLocationRegistration);
 
 io.listen(app.listen(port, function(){
     console.log("server running on port:", port);
 }));
 
 app.io = io.on("connection",function(socket){
-    console.log("socket connected" +  socket.id);
+    console.log("socket connected: " +  socket.id);
+    
+    socket.on("disconnect", function(){
+        console.log("socket disconnected:" + socket.id);
+    });
+
+    socket.on("registerMe",function(data){
+        console.log("driver current location is updated: " + data.driverId + " " +data.socketId);
+    });
+
 });
+
+

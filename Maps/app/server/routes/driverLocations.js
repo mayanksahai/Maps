@@ -6,6 +6,7 @@ var db = mongojs("mongodb://mayank:sganesh@ds135750.mlab.com:35750/mayanktest",[
 
 //update driver socket id
 router.put("/driverLocationSocket/:id",function(req,res,next){
+    console.log("registering driver:"+ req.body.connectedDriver.payload.driverId);
     var io = req.app.io;
     if(!req.body){
         res.status(400);
@@ -24,6 +25,35 @@ router.put("/driverLocationSocket/:id",function(req,res,next){
             );
     }
 
+});
+
+//update driver socket id
+router.post("/driverLocations",function(req,res,next){
+    var driverLocation = req.body.driverLocation;
+    var driverId = req.body.driverId;
+    var socketId = req.body.socketId;
+    var io = req.app.io;
+    if(!driverLocation.latitude){
+        res.status(400);
+        res.json({error:"bad data"});
+    }else{
+        var coords = [driverLocation.latitude,driverLocation.longitude];
+        var payload = {
+            "driverId":driverId,
+            "coordinate":{
+                "type":"point",
+                "coordinates":coords
+            },
+            "socketId":socketId
+        }
+        db.driverLocations.save(payload,function(error,savedLocation){
+            if(error){
+                res.send(error);
+            }
+            res.json(savedLocation);
+            console.log("Driver id:"+driverId + " is connected with socketId:" +socketId + " and at location:%s" + driverLocation.latitude + ":" + driverLocation.longitude);
+        });  
+    }
 });
 
 // get nearby driver
@@ -62,6 +92,7 @@ router.get("/driverLocation/:id", function(req, res, next){
 
 //Update Location by driver to user
 router.put("/driverLocation/:id", function(req, res, next){
+    console.log("update driver location and socket id in database");
     var io = req.app.io;
     var location = req.body;
     var latitude = parseFloat(location.latitude);

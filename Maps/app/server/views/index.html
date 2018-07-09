@@ -32,124 +32,124 @@
 
 
 <script>
-    var socket = io();
-    socket.on("connect", ()=>{
-        console.log(socket.id);
-        var driverCurrentData = {
-            "socketId":socket.id,
-            "locationId":"5b0b614c60b4262c244bed8b"
-        };
-        $.ajax({
-            type: "PUT",
-            url:"/api/driverLocationSocket/" + driverCurrentData.locationId,
-            dataType:"json",
-            data:driverCurrentData
-        }).done(function(response){
-            if(response !== ""){
-                console.log("success");
-            } else{
-                console.log("Error" + response);
-            }
-        });
-        //When emited by user on random nearby driver
-        var driverRequest = socket.id + "driverRequest";
-        socket.on(driverRequest, function(passengerData){
-            if(passengerData){
-                console.log("Passenger looking for a driver", passengerData);
-                //Update booking status to confirmed on btn click
-                $(".btn").click(function(e){
-                    //e.preventDefault();
+    // var socket = io();
+    // socket.on("connect", ()=>{
+    //     console.log(socket.id);
+    //     var driverCurrentData = {
+    //         "socketId":socket.id,
+    //         "locationId":"5b0b614c60b4262c244bed8b"
+    //     };
+    //     $.ajax({
+    //         type: "PUT",
+    //         url:"/api/driverLocationSocket/" + driverCurrentData.locationId,
+    //         dataType:"json",
+    //         data:driverCurrentData
+    //     }).done(function(response){
+    //         if(response !== ""){
+    //             console.log("success");
+    //         } else{
+    //             console.log("Error" + response);
+    //         }
+    //     });
+    //     //When emited by user on random nearby driver
+    //     var driverRequest = socket.id + "driverRequest";
+    //     socket.on(driverRequest, function(passengerData){
+    //         if(passengerData){
+    //             console.log("Passenger looking for a driver", passengerData);
+    //             //Update booking status to confirmed on btn click
+    //             $(".btn").click(function(e){
+    //                 //e.preventDefault();
 
-                    var status = $("#bookingStatus").val();
-                    var dataToSend = {
-                        "driverId":"5b0b5d4e60b4262c244bed22",
-                        "id": passengerData._id,
-                        "status": status,
-                    };
-                    $.ajax({
-                        type: "PUT",
-                        url: "/api/bookings/" + passengerData._id,
-                        dataType: "json",
-                        data: dataToSend
-                    }).done(function( response ) {
-                        // Check for a successful (blank) response
-                        if (response !== "") {
-                            console.log("Success");
-                        }
-                        else {
-                            console.log("Error: " + response);
-                        }
-                    });
-                });
-            }
-        });
-        socket.on("trackDriver", function(location){
-            var driverMovement = [{
-                    lat:1.285835,
-                    long:103.846177
-                },
-                {
-                    lat:1.284614,
-                    long:103.850251
-                },
-                {
-                    lat:1.284960,
-                    long:103.850499
-                },
-                {
-                    lat:1.285416,
-                    long:103.849522
-                },
-                {
-                    lat:1.286521,
-                    long:103.846580
-                },
-                {
-                    lat:1.288204,
-                    long:103.847693
-                },
-                {
-                    lat:1.289010,
-                    long:103.847698
-                },{
-                    lat:1.289467,
-                    long:103.847201
-                },
-                {
-                    lat:1.290602,
-                    long:103.846474
-                }
-                ];
-            var index = 0;
-            var interval = setInterval(function(){
-                var movementObj = driverMovement[index++];
-                if (index == driverMovement.length){
-                    clearInterval(interval);
-                    console.log(index)
-                }
-                var driverCurrentLocation = {
-                    "locationId":location._id,
-                    "latitude": movementObj.lat,
-                    "longitude": movementObj.long
-                };
-                $.ajax({
-                    type: "PUT",
-                    url: "/api/driverLocation/" + location._id,
-                    dataType: "json",
-                    data: driverCurrentLocation
-                }).done(function( response ) {
-                    // Check for a successful (blank) response
-                    if (response !== "") {
-                        console.log("Driver Location updated ");
-                    }
-                    else {
-                        console.log("Error: " + response);
-                    }
-                });
-            },5000);
+    //                 var status = $("#bookingStatus").val();
+    //                 var dataToSend = {
+    //                     "driverId":"5b0b5d4e60b4262c244bed22",
+    //                     "id": passengerData._id,
+    //                     "status": status,
+    //                 };
+    //                 $.ajax({
+    //                     type: "PUT",
+    //                     url: "/api/bookings/" + passengerData._id,
+    //                     dataType: "json",
+    //                     data: dataToSend
+    //                 }).done(function( response ) {
+    //                     // Check for a successful (blank) response
+    //                     if (response !== "") {
+    //                         console.log("Success");
+    //                     }
+    //                     else {
+    //                         console.log("Error: " + response);
+    //                     }
+    //                 });
+    //             });
+    //         }
+    //     });
+    //     socket.on("trackDriver", function(location){
+    //         var driverMovement = [{
+    //                 lat:1.285835,
+    //                 long:103.846177
+    //             },
+    //             {
+    //                 lat:1.284614,
+    //                 long:103.850251
+    //             },
+    //             {
+    //                 lat:1.284960,
+    //                 long:103.850499
+    //             },
+    //             {
+    //                 lat:1.285416,
+    //                 long:103.849522
+    //             },
+    //             {
+    //                 lat:1.286521,
+    //                 long:103.846580
+    //             },
+    //             {
+    //                 lat:1.288204,
+    //                 long:103.847693
+    //             },
+    //             {
+    //                 lat:1.289010,
+    //                 long:103.847698
+    //             },{
+    //                 lat:1.289467,
+    //                 long:103.847201
+    //             },
+    //             {
+    //                 lat:1.290602,
+    //                 long:103.846474
+    //             }
+    //             ];
+    //         var index = 0;
+    //         var interval = setInterval(function(){
+    //             var movementObj = driverMovement[index++];
+    //             if (index == driverMovement.length){
+    //                 clearInterval(interval);
+    //                 console.log(index)
+    //             }
+    //             var driverCurrentLocation = {
+    //                 "locationId":location._id,
+    //                 "latitude": movementObj.lat,
+    //                 "longitude": movementObj.long
+    //             };
+    //             $.ajax({
+    //                 type: "PUT",
+    //                 url: "/api/driverLocation/" + location._id,
+    //                 dataType: "json",
+    //                 data: driverCurrentLocation
+    //             }).done(function( response ) {
+    //                 // Check for a successful (blank) response
+    //                 if (response !== "") {
+    //                     console.log("Driver Location updated ");
+    //                 }
+    //                 else {
+    //                     console.log("Error: " + response);
+    //                 }
+    //             });
+    //         },5000);
 
-        });
-    });
+    //     });
+    // });
 
 
 </script>
