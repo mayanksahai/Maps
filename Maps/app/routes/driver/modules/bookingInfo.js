@@ -9,7 +9,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = ASPECT_RATIO * LATITUDE_DELTA
 
 const {
-    GET_DRIVER_LOCATION,
+    MY_CURRENT_LOCATION,
     GET_PENDING_BOOKINGS,
     DRIVER_REJECTED_BOOKING,
     DRIVER_ACCEPTED_BOOKING,
@@ -25,7 +25,7 @@ export function getDriverCurrentLocation(){
         navigator.geolocation.getCurrentPosition(
             (position)=>{
                 dispatch({
-                    type:GET_DRIVER_LOCATION,
+                    type:MY_CURRENT_LOCATION,
                     payload:position
                 });
             },
@@ -34,6 +34,8 @@ export function getDriverCurrentLocation(){
         );
     }
 }
+
+
 
 export function registerMe(payload){
     return ((dispatch)=>{
@@ -74,10 +76,23 @@ export function rejectBooking(bookingId){
     }
 }
 
-export function acceptBooking(payload){
-    return (dispatch) => {
-        console.log("driver accepted booking");
-    }
+export function acceptBooking(bookingId){
+    return ((dispatch,store)=>{
+        var payload = {
+            "status": "confirmed",
+            "driverId":store().bookingInfo.driverId,
+            "bookingId":bookingId
+        };
+        request.put("http://localhost:3000/api/bookings/"+payload.bookingId)
+        .send(payload)
+        .finish((error, res)=>{
+            console.log("driver accepted booking: " + res.body);
+            dispatch({
+                type:DRIVER_ACCEPTED_BOOKING,
+                payload:res.body
+            });
+        });
+    })
 }
 
 
@@ -89,7 +104,7 @@ function handleGetPendingBookings(state, action){
     });
 }
 
-function handleDriverCurrentLocation(state, action){
+function handleMyCurrentLocation(state, action){
     return update(state, {
         driverLocation:{
             latitude:{
@@ -119,7 +134,7 @@ function handleDriverRejectedBooking(state, action){
 function handleDriverAcceptedBooking(state, action){
     //update booking object in databse with driver socketId
     return update(state, {
-        pendingBookings:{
+        activeBooking:{
             $set:action.payload
         }
     });
@@ -134,9 +149,11 @@ function handleDriverRegistered(state, action){
     });
 }
 
+
+
 const ACTION_HANDLERS = {
     GET_PENDING_BOOKINGS:handleGetPendingBookings,
-    GET_DRIVER_LOCATION:handleDriverCurrentLocation,
+    MY_CURRENT_LOCATION:handleMyCurrentLocation,
     DRIVER_ACCEPTED_BOOKING:handleDriverAcceptedBooking,
     DRIVER_REJECTED_BOOKING:handleDriverRejectedBooking,
     DRIVER_REGISTERED:handleDriverRegistered
@@ -145,8 +162,10 @@ const ACTION_HANDLERS = {
 const initialState = {
     driverLocation:{},
     availableDrivers:{},
+    driverId:"5b0b5d4e60b4262c244bed22",
     pendingBookings:[],
-    driverRegistered:false
+    driverRegistered:false,
+    activeBooking:{}
 };
 
 export function BookingInfoReducer (state = initialState, action){

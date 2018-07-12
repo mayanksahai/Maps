@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+  <metadata>
+    <link href="http://www.mapstogpx.com">
+      <text>Sverrir Sigmundarson</text>
+    </link>
+    <!--desc>Map data copyright 2018 Google</desc-->
+    <!--copyright author="Google Inc">
+    	<year>2018</year>
+    	<license>https://developers.google.com/maps/terms</license>
+    </copyright-->
+    <!--url>https://www.google.co.uk/maps/dir/Fullerton Square, The Fullerton Hotel, Singapore/One Raffles Place/@1.2852756,103.8497809,17z/data=!3m2!4b1!5s0x31da190eab7a8011:0xf05e6f12b5c95e10!4m14!4m13!1m5!1m1!1s0x31da19090f9c176f:0x41c12c50babf70d0!2m2!1d103.8530671!2d1.2863532!1m5!1m1!1s0x31da190eac69d42b:0xa515f37e85e7e5e9!2m2!1d103.8510578!2d1.2841873!3e0?hl=en</url-->
+    <time>2018-07-10T16:22:35Z</time>
+  </metadata>
+  <wpt lat="1.2862736" lon="103.8526656">
+    <name>WP001</name>
+  </wpt>
+  <wpt lat="1.2860832858751" lon="103.85271973572">
+    <name>WP002</name>
+  </wpt>
+  <wpt lat="1.2858929717503" lon="103.85277387145">
+    <name>WP003</name>
+  </wpt>
+  <wpt lat="1.2857026576254" lon="103.85282800717">
+    <name>WP004</name>
+  </wpt>
+  <wpt lat="1.2855123435005" lon="103.85288214289">
+    <name>WP005</name>
+  </wpt>
+  <wpt lat="1.2853220293757" lon="103.85293627862">
+    <name>WP006</name>
+  </wpt>
+  <wpt lat="1.2852643" lon="103.8529527">
+    <name>WP007</name>
+  </wpt>
+</gpx>

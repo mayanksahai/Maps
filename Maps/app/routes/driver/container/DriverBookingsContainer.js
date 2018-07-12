@@ -8,7 +8,8 @@ const mapStateToProps = (state) => ({
     pendingBookings: state.bookingInfo.pendingBookings || [],
     driverLocation:state.bookingInfo.driverLocation || {},
     driverId:"5b0b5d4e60b4262c244bed22",
-    driverRegistered:state.bookingInfo.driverRegistered || false
+    driverRegistered:state.bookingInfo.driverRegistered || false,
+    activeBooking:state.bookingInfo.activeBooking
 });
 
 const mapActionCreators = {

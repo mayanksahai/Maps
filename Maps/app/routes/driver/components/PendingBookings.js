@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Container,View } from 'native-base';
+import {Actions} from "react-native-router-flux";
 import AcceptBooking from './acceptBooking';
 import HeaderComponent from "../../../components/headerComponent";
 import FooterComponent from "../../../components/footerComponent";
@@ -37,18 +38,14 @@ class PendingBookings extends Component {
             };
             this.props.registerMe(data);
         }
+
+        if(this.props.activeBooking.driverId === this.props.driverId){
+            Actions.trackTrip({type:"reset"});
+        }
     }
 
     acceptsBooking(bookingId){
-        if(this.props.driverLocation.latitude){
-            var driverCurrentData = {
-                "socketId":this.state.socket.id,
-                "location":this.props.driverLocation,
-                "driverId":this.props.driverId,
-                "bookingId":bookingId
-            };
-            this.props.acceptBooking(driverCurrentData);
-        }
+        this.props.acceptBooking(bookingId)
     }
     
     render() {
@@ -58,7 +55,7 @@ class PendingBookings extends Component {
             {this.props.driverLocation.latitude && 
             <View style={{flex:1}}>
                 <AcceptBooking pendingBookings={this.props.pendingBookings} 
-                                acceptBooking={this.acceptsBooking}
+                                acceptBooking={this.acceptsBooking.bind(this)}
                                 rejectBooking={this.props.rejectBooking}/>
             </View>
             }
